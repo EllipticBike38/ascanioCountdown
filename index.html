@@ -13,6 +13,7 @@
 
             gtag('config', 'G-BJLVJ1JWNG');
         </script>
+        <script id="usercentrics-cmp" src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id="ntcrtceUnAtWnH" async></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap" rel="stylesheet">
@@ -21,6 +22,9 @@
         body {
             background-color: #222;
             margin: 0;
+        }
+        #usercentrics-root button{
+            background-color: greenyellow;
         }
 
         .sixtyfour {
@@ -93,6 +97,13 @@
             color: greenyellow;
             text-decoration: none;
         }
+
+        footer #privacy {
+            color: honeydew;
+            text-shadow: 0 0 10px greenyellow;
+            font-size: small;
+            text-decoration: underline;
+        }
     </style>
 
     <body>
@@ -128,6 +139,7 @@
             <p style="color: greenyellow; text-align: center; ">Made by <a href="
                 https://www.github.com/EllipticBike38">EllipticBike38
                 </a></p>
+                <a href="#" id="privacy" onClick="UC_UI.showSecondLayer();">Privacy Settings</a>
 
     </body>
     <script>
