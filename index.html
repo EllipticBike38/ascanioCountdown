@@ -21,7 +21,8 @@
     <style>
         body {
             background-color: #222;
-            margin: 0;
+            margin: 0 0 70px 0;
+            max-height: 100%;
         }
         #usercentrics-root button{
             background-color: greenyellow;
@@ -116,47 +117,90 @@
         <table class="sixtyfour" id="countdown">
             <tr class="countdown_numbers">
                 <td id="days">??</td>
-                <td>Giorni</td>
+                <td id="days_label">Giorni</td>
 
             </tr>
             <tr class="countdown_numbers">
                 <td id="hours">??</td>
-                <td>Ore</td>
+                <td id="hours_label">Ore</td>
             </tr>
             <tr class="countdown_numbers">
                 <td id="minutes">??</td>
-                <td>Minuti</td>
+                <td id="minutes_label">Minuti</td>
             </tr>
             <tr class="countdown_numbers">
                 <td id="seconds">??</td>
-                <td>Secondi</td>
+                <td id="seconds_label">Secondi</td>
             </tr>
             <tr>
                 <td colspan="2" id="video"></td>
             </tr>
         </table>
+
+    </body>
         <footer>
             <p style="color: greenyellow; text-align: center; ">Made by <a href="
                 https://www.github.com/EllipticBike38">EllipticBike38
                 </a></p>
                 <a href="#" id="privacy" onClick="UC_UI.showSecondLayer();">Privacy Settings</a>
-
-    </body>
+        </footer>
     <script>
+        var lang = navigator.language || navigator.userLanguage;
+        lang = lang.slice(0, 2);
+        console.log(lang);
+        const lang_dict={
+            "it": {
+                "days": "Giorni",
+                "hours": "Ore",
+                "minutes": "Minuti",
+                "seconds": "Secondi",
+                "standard_bio":"Manca poco all' otto di gennaio. Ascanio è sempre più vicino alle nostre porte. Tu, navigatore senza paura dell'interrete, condottiero di like e visualizzazioni, tu, esploratore virtuale di mondi digitali, tu, che hai trovato questa pagina, sei pronto a far entrar Ascanio?",
+                "ascanio_bio":"Ascanio è entrato. La sua presenza è ormai tangibile. La sua aura pervade ogni angolo di questo spazio digitale. Benvenuto Ascanio.",
+
+
+            },
+            "en": {
+                "days": "Days",
+                "hours": "Hours",
+                "minutes": "Minutes",
+                "seconds": "Seconds",
+                'standard_bio':"January 8th is coming. Ascanio is getting closer to our doors. You, fearless internet navigator, leader of likes and views, you, virtual explorer of digital worlds, you, who found this page, are you ready to let Ascanio in?",
+                "ascanio_bio":"Ascanio has entered. His presence is now tangible. His aura pervades every corner of this digital space. Welcome Ascanio.",
+            }
+        }
+
+
         Ascanio = () => new Date().getDate() === 8 && new Date().getMonth() === 0;
+
+        const change_lang = (l = undefined) => {
+            if (lang === "it") {
+                lang = "en";
+            }
+            else {
+                lang = "it";
+            }
+            if (l !== undefined) {
+                lang = l;
+            }
+            document.getElementById('bio').innerText = Ascanio() ? lang_dict[lang].ascanio_bio : lang_dict[lang].standard_bio;
+            document.getElementById('days_label').innerText = lang_dict[l ?? lang].days;
+            document.getElementById('hours_label').innerText = lang_dict[l ?? lang].hours;
+            document.getElementById('minutes_label').innerText = lang_dict[l ?? lang].minutes;
+            document.getElementById('seconds_label').innerText = lang_dict[l ?? lang].seconds;
+        }
+        change_lang(lang)
         const let_ascanio_in = () => {
             document.getElementById('video').innerHTML = `<iframe height="315" src="https://www.youtube.com/embed/EMGR5sm-V1U?si=HsFCHkCthUhjZGDi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
             const nums = document.getElementsByClassName("countdown_numbers");
             for (let i = 0; i < nums.length; i++) {
                 nums.item(i).style.display = "none";
             }
-            document.getElementById('bio').innerText = "Ascanio è entrato. La sua presenza è ormai tangibile. La sua aura pervade ogni angolo di questo spazio digitale. Benvenuto Ascanio.";
+            document.getElementById('bio').innerText = lang_dict[lang].ascanio_bio;
         }
         if (Ascanio()) {
             let_ascanio_in();
         }
         else {
-            console.log("Ascanio is out");
             console.log({
                 day: new Date().getDate(),
                 month: new Date().getMonth()
