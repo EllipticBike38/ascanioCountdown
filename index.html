@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ascanio Countdown</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap" rel="stylesheet">
+    </head>
+    <style>
+        body {
+            background-color: #222;
+            margin: 0;
+        }
+
+        .sixtyfour {
+            font-family: "Sixtyfour", serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            font-variation-settings:
+                "BLED" 0,
+                "SCAN" 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            color: greenyellow;
+            font-variant: small-caps;
+            text-shadow: 0 0 10px greenyellow;
+        }
+
+        p {
+            color: honeydew;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 10px greenyellow;
+            width: clamp(300px, 80%, 800px);
+            margin: 0 auto 50px auto;
+        }
+
+        #countdown {
+            border-radius: 50px;
+            background: #000;
+            box-shadow: 10px 10px 60px rgba(153, 255, 0, 0.363), -10px -10px 60px rgba(153, 255, 0, 0.363);
+            border: 2px solid greenyellow;
+            padding: 50px;
+            margin: 0 auto;
+
+            color: honeydew;
+            text-shadow: 0 0 10px greenyellow;
+
+
+            height: 200px;
+            min-width: min(90%, 500px);
+        }
+        #countdown iframe {
+            width: 100%;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #000;
+            color: greenyellow;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            text-shadow: 0 0 10px greenyellow;
+        }
+        footer p {
+            margin: 0 auto;
+            
+        }
+        footer a {
+            color: greenyellow;
+            text-decoration: none;
+        }
+    </style>
+
+    <body>
+        <h1 class="sixtyfour">Ascanio Countdown</h1>
+        <p id="bio">Manca poco all' otto di gennaio. Ascanio è sempre più vicino alle nostre porte. Tu, navigatore senza paura
+            dell'interrete, condottiero di like e visualizzazioni, tu, esploratore virtuale di mondi digitali, tu, che
+            hai trovato questa pagina, sei pronto a far entrar Ascanio?
+        </p>
+        <table class="sixtyfour" id="countdown">
+            <tr class="countdown_numbers">
+                <td id="days">??</td>
+                <td>Giorni</td>
+
+            </tr>
+            <tr class="countdown_numbers">
+                <td id="hours">??</td>
+                <td>Ore</td>
+            </tr>
+            <tr class="countdown_numbers">
+                <td id="minutes">??</td>
+                <td>Minuti</td>
+            </tr>
+            <tr class="countdown_numbers">
+                <td id="seconds">??</td>
+                <td>Secondi</td>
+            </tr>
+            <tr>
+                <td colspan="2" id="video"></td>
+            </tr>
+        </table>
+        <footer>
+            <p style="color: greenyellow; text-align: center; ">Made by <a href="
+                https://www.github.com/EllipticBike38">EllipticBike38
+            </a></p>
+
+    </body>
+    <script>
+        Ascanio = () => new Date().getDate() === 8 && new Date().getMonth() === 0;
+        const let_ascanio_in = () => {
+            document.getElementById('video').innerHTML = `<iframe height="315" src="https://www.youtube.com/embed/EMGR5sm-V1U?si=HsFCHkCthUhjZGDi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+            const nums = document.getElementsByClassName("countdown_numbers");
+            for (let i = 0; i < nums.length; i++) {
+                nums.item(i).style.display = "none";
+            }
+            document.getElementById('bio').innerText = "Ascanio è entrato. La sua presenza è ormai tangibile. La sua aura pervade ogni angolo di questo spazio digitale. Benvenuto Ascanio.";
+        }
+        if (Ascanio()) {
+            let_ascanio_in();
+        }
+        else {
+            console.log("Ascanio is out");
+            console.log({
+                day: new Date().getDate(),
+                month: new Date().getMonth()
+            });
+            const fun = () => {
+
+                const countDate = new Date();
+                const now = new Date();
+
+
+                if (Ascanio()) {
+                    let_ascanio_in();
+                    try {
+                        clearInterval(countdown);
+                    }
+                    catch (e) {
+                        console.error(e);
+                    }
+                }
+
+                countDate.setDate(8);
+                countDate.setMonth(0);
+                countDate.setFullYear(now.getFullYear() + (now.getMonth() === 0 && now.getDate() >= 8 ? 1 : 0));
+                countDate.setHours(0);
+                countDate.setMinutes(0);
+                countDate.setSeconds(0);
+
+                const gap = countDate.getTime() - now.getTime();
+
+                const second = 1000;
+                const minute = second * 60;
+                const hour = minute * 60;
+                const day = hour * 24;
+                // 1 2 3 4... in 01 02 03 04...
+                const days = Math.floor(gap / day).toString().padStart(2, '0');
+                const hours = Math.floor((gap % day) / hour).toString().padStart(2, '0');
+                const minutes = Math.floor((gap % hour) / minute).toString().padStart(2, '0');
+                const seconds = Math.floor((gap % minute) / second).toString().padStart(2, '0');
+
+                document.getElementById('days').innerText = days;
+                document.getElementById('hours').innerText = hours;
+                document.getElementById('minutes').innerText = minutes;
+                document.getElementById('seconds').innerText = seconds;
+
+
+            }
+            fun();
+            const countdown = setInterval(fun, 1000);
+        }
+
+
+
+    </script>
+
+</html>
