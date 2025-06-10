@@ -223,7 +223,8 @@
 
                 countDate.setDate(8);
                 countDate.setMonth(0);
-                countDate.setFullYear(now.getFullYear() + (now.getMonth() === 0 && now.getDate() >= 8 ? 1 : 0));
+                const jan8ThisYear = new Date(now.getFullYear(), 0, 8);
+                countDate.setFullYear(now.getFullYear() + (now >= jan8ThisYear ? 1 : 0));
                 countDate.setHours(0);
                 countDate.setMinutes(0);
                 countDate.setSeconds(0);
